@@ -13,7 +13,9 @@
 			<div class="row">
 				<div class="col-xs-12 col-md-6 col-md-offset-3">
 					<h1 class="text-center">OK mango POC</h1>
-	    		<p class="text-center" th:text="'Hello, ' + ${name} + '!'" />
+	    		<p class="text-center">
+	    			Hello <span sec:authentication="name"></span>
+	    		</p>
 	    	</div>
 	    </div>
 	  </div>
