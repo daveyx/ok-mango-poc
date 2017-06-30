@@ -1,4 +1,4 @@
-package ok.mango.persistence;
+package ok.mango.poc.persistence;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
