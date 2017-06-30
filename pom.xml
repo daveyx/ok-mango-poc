@@ -15,13 +15,14 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<commons-lang3.version>3.3.2</commons-lang3.version>
 	</properties>
 
 	<dependencies>
@@ -73,9 +74,14 @@
 			<artifactId>spring-social-facebook</artifactId>
 		</dependency>
 		<dependency>
-		  <groupId>com.mangopay</groupId>
-		  <artifactId>mangopay2-java-sdk</artifactId>
-		  <version>1.2.0</version>
+			<groupId>com.mangopay</groupId>
+			<artifactId>mangopay2-java-sdk</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 	</dependencies>
 
