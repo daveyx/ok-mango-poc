@@ -43,5 +43,9 @@ public class MangopayService implements IMangopayService {
 			e.printStackTrace();
 		}
 	}
+	
+	public void getUser() {
+		
+	}
 
 }

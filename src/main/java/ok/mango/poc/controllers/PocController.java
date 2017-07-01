@@ -26,8 +26,7 @@ public class PocController {
 	
     @RequestMapping(method=RequestMethod.GET, value="/")
     public String poc(@RequestParam(value="name", required=false, defaultValue="World") String name, final Model model) {
-//        model.addAttribute("name", name);
-//        mpService.reqestMangoPay();
+        mpService.reqestMangoPay();
         return "index";
     }
     
