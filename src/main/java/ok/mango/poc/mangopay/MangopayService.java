@@ -40,9 +40,9 @@ public class MangopayService implements IMangopayService {
 
 	public MangopayService() {
 		api = new MangoPayApi();
-		api.Config.ClientId = mangoClientId;
-		api.Config.ClientPassword = mangoClientPw;
-		api.Config.BaseUrl = mangoApi;
+		api.getConfig().setClientId(mangoClientId);
+		api.getConfig().setClientPassword(mangoClientPw);
+		api.getConfig().setBaseUrl(mangoApi);
 		authToken = null;
 		tokenType = null;
 		expiration = new DateTime();
@@ -51,9 +51,9 @@ public class MangopayService implements IMangopayService {
 	public void authMangoPay() {
 		try {
 			// List<User> users = api.Users.getAll();
-			final OAuthToken token = api.AuthenticationManager.createToken();
+			final OAuthToken token = api.getAuthenticationManager().createToken();
 			System.out.println(
-					"token=" + token.access_token + ", type=" + token.token_type + ", expires=" + token.expires_in);
+					"token=" + token.getAccessToken() + ", type=" + token.getTokenType() + ", expires=" + token.getExpiresIn());
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
