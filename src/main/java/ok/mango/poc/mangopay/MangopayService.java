@@ -24,7 +24,7 @@ public class MangopayService implements IMangopayService {
 	@Value("${ok.mango.clientpw}")
 	private String mangoClientPw;
 
-	public void reqestMangoPay() {
+	public void authMangoPay() {
 
 		final MangoPayApi api = new MangoPayApi();
 

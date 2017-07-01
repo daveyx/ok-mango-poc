@@ -26,7 +26,7 @@ public class PocController {
 	
     @RequestMapping(method=RequestMethod.GET, value="/")
     public String poc(@RequestParam(value="name", required=false, defaultValue="World") String name, final Model model) {
-        mpService.reqestMangoPay();
+        mpService.authMangoPay();
         return "index";
     }
     

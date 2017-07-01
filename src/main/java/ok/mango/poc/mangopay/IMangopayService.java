@@ -7,5 +7,5 @@ package ok.mango.poc.mangopay;
  */
 
 public interface IMangopayService {
-	void reqestMangoPay();
+	void authMangoPay();
 }
