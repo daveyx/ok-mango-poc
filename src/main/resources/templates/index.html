@@ -16,6 +16,15 @@
 	    		<p class="text-center">
 	    			Hello <span sec:authentication="name"></span>
 	    		</p>
+	    		<div th:if="${message != null}">
+	    			<hr />
+	    			<h4 class="text-center">Message from Server</h4>
+				  	<div class="text-center" th:text="${message}"></div>
+				  	<hr />
+					</div>
+					<form action="/execute" method="POST">
+						<input type="submit" name="action" value="execute" />
+					</form>
 	    	</div>
 	    </div>
 	  </div>
