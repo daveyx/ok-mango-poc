@@ -34,8 +34,8 @@ public class PocController {
     	System.out.println("action=" + action);
     	final ModelAndView mav = new ModelAndView("index"); 
     	mav.addObject("message", "peter");
-    	mpService.authMangoPay();
-    	mpService.createUserDaveyx();
+//    	mpService.authMangoPay();
+    	mpService.createWalletDaveyx();
     	return mav;
     }
     

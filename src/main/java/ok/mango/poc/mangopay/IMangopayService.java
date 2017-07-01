@@ -1,6 +1,7 @@
 package ok.mango.poc.mangopay;
 
 import com.mangopay.entities.User;
+import com.mangopay.entities.Wallet;
 
 /**
  *
@@ -11,4 +12,5 @@ import com.mangopay.entities.User;
 public interface IMangopayService {
 	void authMangoPay();
 	User createUserDaveyx();
+	Wallet createWalletDaveyx();
 }
