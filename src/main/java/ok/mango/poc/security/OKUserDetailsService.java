@@ -31,7 +31,7 @@ public class OKUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String username) {
-        final PUser user = userRepository.findByUsername(username);
+        final PUser user = userRepository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
