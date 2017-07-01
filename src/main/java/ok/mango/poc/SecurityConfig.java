@@ -56,5 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public ProviderSignInController providerSignInController() {
         ((InMemoryUsersConnectionRepository) usersConnectionRepository).setConnectionSignUp(facebookConnectionSignup);
         return new ProviderSignInController(connectionFactoryLocator, usersConnectionRepository, new FacebookSignInAdapter());
-    }
+	}
+
 }
