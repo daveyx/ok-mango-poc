@@ -26,7 +26,6 @@ public class PocController {
 	
     @RequestMapping(method=RequestMethod.GET, value="/")
     public String poc(@RequestParam(value="name", required=false, defaultValue="World") String name, final Model model) {
-        mpService.authMangoPay();
         return "index";
     }
     
@@ -35,11 +34,13 @@ public class PocController {
     	System.out.println("action=" + action);
     	final ModelAndView mav = new ModelAndView("index"); 
     	mav.addObject("message", "peter");
+    	mpService.authMangoPay();
+    	mpService.createUserDaveyx();
     	return mav;
     }
     
-    @Bean
-    public IMangopayService getMangepayService() {
-    	return new MangopayService();
-    }
+//    @Bean
+//    public IMangopayService getMangepayService() {
+//    	return new MangopayService();
+//    }
 }

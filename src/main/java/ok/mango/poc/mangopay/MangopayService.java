@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mangopay.MangoPayApi;
+import com.mangopay.core.Configuration;
 import com.mangopay.core.OAuthToken;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.entities.User;
@@ -21,15 +22,6 @@ import com.mangopay.entities.UserNatural;
 @Service
 public class MangopayService implements IMangopayService {
 
-	@Value("${ok.mango.api}")
-	private String mangoApi;
-
-	@Value("${ok.mango.clientid}")
-	private String mangoClientId;
-
-	@Value("${ok.mango.clientpw}")
-	private String mangoClientPw;
-
 	private final MangoPayApi api;
 
 	private String authToken;
@@ -38,11 +30,17 @@ public class MangopayService implements IMangopayService {
 
 	private DateTime expiration;
 
-	public MangopayService() {
+	public MangopayService(
+			@Value("${ok.mango.api}") final String mangoApi,
+			@Value("${ok.mango.clientid}") final String mangoClientId,
+			@Value("${ok.mango.clientpw}") final String mangoClientPw) {
+		final Configuration config = new Configuration();
+		config.setClientId(mangoClientId);
+		config.setClientPassword(mangoClientPw);
+		config.setBaseUrl(mangoApi);
+
 		api = new MangoPayApi();
-		api.getConfig().setClientId(mangoClientId);
-		api.getConfig().setClientPassword(mangoClientPw);
-		api.getConfig().setBaseUrl(mangoApi);
+		api.setConfig(config);
 		authToken = null;
 		tokenType = null;
 		expiration = new DateTime();
@@ -72,12 +70,13 @@ public class MangopayService implements IMangopayService {
 		user.setCountryOfResidence(CountryIso.DE);
 
 		try {
-			api.getUserApi().create(user);
+			final User userCreated = api.getUserApi().create(user);
+			System.out.println("userCreated: " + userCreated); //id=28519399
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
-
 }
