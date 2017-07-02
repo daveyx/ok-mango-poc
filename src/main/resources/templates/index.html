@@ -16,6 +16,19 @@
 	    		<p class="text-center">
 	    			Hello <span sec:authentication="name"></span>
 	    		</p>
+	    		<div th:if="${fbuser != null and fbuser == true}">
+	    			<h4 class="text-center">Message from Server</h4>
+	    			<div class="text-center">Your id is: </div>
+				  	<div class="text-center" th:text="${id}"></div>
+				  	<img class="img-responsive center-block" th:src="${img}" />
+	    			<div class="text-center">Your name is: </div>
+				  	<div class="text-center" th:text="${name}"></div>
+	    			<div class="text-center">Your email is: </div>
+				  	<div class="text-center" th:text="${email}"></div>
+	    		</div>
+	    		<div th:if="${fbuser != null and fbuser == true}">
+	    			
+	    		</div>
 	    		<div th:if="${message != null}">
 	    			<hr />
 	    			<h4 class="text-center">Message from Server</h4>
