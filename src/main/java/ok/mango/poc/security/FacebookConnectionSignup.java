@@ -35,10 +35,11 @@ public class FacebookConnectionSignup implements ConnectionSignUp {
 		final String profileEmail = userProfile.getEmail();
 		final PUser user = new PUser();
 		user.setEmail(profileEmail);
-		user.setUsername(connection.getDisplayName());
+		user.setFirstName(userProfile.getFirstName());
+		user.setLastName(userProfile.getLastName());
 		user.setPassword(randomAlphabetic(8));
 		userRepository.save(user);
-		return user.getUsername();
+		return connection.getDisplayName();
 	}
 
 }

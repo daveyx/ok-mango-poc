@@ -24,7 +24,8 @@ public class DatabaseLoader implements CommandLineRunner {
 	public void run(String... strings) throws Exception {
 		final PUser pUser = new PUser();
 		pUser.setEmail("d.rehle@gmail.com");
-		pUser.setUsername("d.rehle@gmail.com");
+		pUser.setFirstName("David");
+		pUser.setLastName("Rehle");
 		pUser.setPassword(XXX);
 		this.users.save(pUser);
 	}

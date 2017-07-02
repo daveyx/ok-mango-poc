@@ -25,10 +25,13 @@ public class PUser {
 	private Long id;
 
 	@Column(nullable = false, unique = true)
-	private String username;
-
-	@Column(nullable = false, unique = true)
 	private String email;
+
+	@Column(nullable = true, unique = false)
+	private String firstName;
+
+	@Column(nullable = true, unique = false)
+	private String lastName;
 
 	private String password;
 
@@ -37,10 +40,12 @@ public class PUser {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("PUser [id=")
 				.append(id)
-				.append(", username=")
-				.append(username)
 				.append(", email=")
 				.append(email)
+				.append(", firstName=")
+				.append(firstName)
+				.append(", lastName=")
+				.append(lastName)
 				.append(", password=")
 				.append(password)
 				.append("]");
