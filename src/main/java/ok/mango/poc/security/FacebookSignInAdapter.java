@@ -10,6 +10,8 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import ok.mango.poc.Constants;
+
 /**
  *
  * @author daveyx
@@ -23,7 +25,7 @@ public class FacebookSignInAdapter implements SignInAdapter {
 	public String signIn(final String localUserId, final Connection<?> connection, final NativeWebRequest request) {
 		System.out.println(" ====== Sign In adapter");
 		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-				connection.getDisplayName(), null, Arrays.asList(new SimpleGrantedAuthority("FACEBOOK_USER"))));
+				connection.getDisplayName(), null, Arrays.asList(new SimpleGrantedAuthority(Constants.ROLE_FACEBOOK_USER))));
 		return null;
 	}
 }

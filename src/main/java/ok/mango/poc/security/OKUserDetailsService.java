@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import ok.mango.poc.Constants;
 import ok.mango.poc.persistence.PUser;
 import ok.mango.poc.persistence.UserRepository;
 
@@ -35,6 +36,6 @@ public class OKUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new User(username, user.getPassword(), true, true, true, true, Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        return new User(username, user.getPassword(), true, true, true, true, Arrays.asList(new SimpleGrantedAuthority(Constants.ROLE_USER)));
     }
 }
