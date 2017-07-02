@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ok.mango.poc.Constants;
 import ok.mango.poc.mangopay.IMangopayService;
+import ok.mango.poc.persistence.PUser;
+import ok.mango.poc.persistence.UserRepository;
 
 /**
  *
@@ -32,13 +34,16 @@ public class PocController {
 	@Autowired
 	private Facebook facebook;
 
+	@Autowired
+	private UserRepository userRepo;
+
 	@RequestMapping(method = RequestMethod.GET, value = "/")
 	public ModelAndView poc(@RequestParam(value = "name", required = false, defaultValue = "World") String name,
 			final Model model) {
-		final Collection<? extends GrantedAuthority> auth = 
-				SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		final Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext()
+				.getAuthentication().getAuthorities();
 		boolean isFacebookUser = false;
-		for (final GrantedAuthority ga : auth) {
+		for (final GrantedAuthority ga : authorities) {
 			if (ga.getAuthority().equals(Constants.ROLE_FACEBOOK_USER)) {
 				isFacebookUser = true;
 				break;
@@ -55,6 +60,12 @@ public class PocController {
 			mav.addObject("img", "https://graph.facebook.com/" + userProfile.getId() + "/picture");
 		} else {
 			mav.addObject("fbuser", false);
+			final org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+					.getContext().getAuthentication().getPrincipal();
+			final PUser pUser = userRepo.findByEmail(user.getUsername());
+			mav.addObject("email", pUser.getEmail());
+			mav.addObject("name", pUser.getFirstName() + " " + pUser.getLastName());
+			mav.addObject("password", pUser.getPassword());
 		}
 		return mav;
 	}

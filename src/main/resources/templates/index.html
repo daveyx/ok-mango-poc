@@ -26,18 +26,33 @@
 	    			<div class="text-center">Your email is: </div>
 				  	<div class="text-center" th:text="${email}"></div>
 	    		</div>
-	    		<div th:if="${fbuser != null and fbuser == true}">
-	    			
+	    		<div th:if="${fbuser != null and fbuser == false}">
+	    			<h4 class="text-center">Message from Server</h4>
+	    			<div class="text-center">Your name is: </div>
+				  	<div class="text-center" th:text="${name}"></div>
+	    			<div class="text-center">Your email is: </div>
+				  	<div class="text-center" th:text="${email}"></div>
+	    			<div class="text-center">Your password is: </div>
+				  	<div class="text-center" th:text="${password}"></div>
 	    		</div>
+	    		<br />
+	    		<br />
+	    		<div class="text-center">
+	    			<a href="/payment">go to paymentpage</a>
+	    		</div>
+	    		<br />
 	    		<div th:if="${message != null}">
 	    			<hr />
 	    			<h4 class="text-center">Message from Server</h4>
 				  	<div class="text-center" th:text="${message}"></div>
 				  	<hr />
 					</div>
-					<form action="/execute" method="POST">
-						<input type="submit" name="action" value="execute" />
-					</form>
+					<h4 class="text-center">Do some action</h4>
+					<div style="width: 75px; margin: auto;">
+						<form action="/execute" method="POST">
+							<input type="submit" name="action" value="execute" class="btn btn-primary" />
+						</form>
+					</div>
 	    	</div>
 	    </div>
 	  </div>
