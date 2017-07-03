@@ -1,9 +1,6 @@
 package ok.mango.poc.controllers;
 
-import java.io.IOException;
 import java.util.Collection;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -75,18 +72,6 @@ public class PocController {
 		}
 		com.mangopay.entities.User mangoUser = mpService.getUserByEmail(email);
 		return mav;
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "execute")
-	public void execute(@RequestParam(value = "action", required = false) final String action,
-			final HttpServletResponse response) throws IOException {
-//		System.out.println("action=" + action);
-		final ModelAndView mav = new ModelAndView("index");
-		final String redirectUrl = mpService.createPayInDaveyx();
-//		mav.addObject("message", redirectUrl);
-//		
-//		return mav;
-		response.sendRedirect(redirectUrl);
 	}
 
 }
