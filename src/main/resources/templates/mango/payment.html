@@ -24,7 +24,19 @@
 				<div th:if="${mangoinfo}">
 					<div class="text-center" th:text="${mangoinfo}"></div>
 				</div>
-				<h4 class="text-center">Do some action</h4>
+				<div class="text-center">
+					Your bday will be 09/09/1980
+					<br />
+					Your nationality and countryofresidence will be DE
+					<br />
+					<strong>Your order amount will be €10.00</strong>
+					<br />
+					Your credit card is:<br />
+					4706750000000009<br />
+					expires: 01/2018<br />
+					CCV: 123
+				</div>
+				<h4 class="text-center">Execute a payment</h4>
 				<div style="width: 75px; margin: auto;">
 					<form action="/execute" method="POST">
 						<input type="submit" name="action" value="execute"
