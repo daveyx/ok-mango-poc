@@ -16,7 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class MangoController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "mango/return")
-	public ModelAndView mangoReturn(@RequestParam(value = "transactionId", required = false) final String transactionId) {
+	public ModelAndView mangoReturn(
+			@RequestParam(value = "transactionId", required = false) final String transactionId) {
 		System.out.println("ok.mango.poc.controllers.MangoController.mangoReturn() transactionId=" + transactionId);
 		final ModelAndView mav = new ModelAndView("mango/return");
 		mav.addObject("transactionId", transactionId);
@@ -28,4 +29,5 @@ public class MangoController {
 		System.out.println("ok.mango.poc.controllers.MangoController.mangoTemplate()");
 		return "mango/template";
 	}
+
 }
