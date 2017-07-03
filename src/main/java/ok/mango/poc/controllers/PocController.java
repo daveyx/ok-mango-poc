@@ -1,6 +1,9 @@
 package ok.mango.poc.controllers;
 
+import java.io.IOException;
 import java.util.Collection;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,6 +53,7 @@ public class PocController {
 			}
 		}
 		final ModelAndView mav = new ModelAndView("index");
+		final String email;
 		if (isFacebookUser) {
 			final String[] fields = { "id", "email", "first_name", "last_name", "cover" };
 			final User userProfile = facebook.fetchObject("me", User.class, fields);
@@ -58,6 +62,7 @@ public class PocController {
 			mav.addObject("email", userProfile.getEmail());
 			mav.addObject("name", userProfile.getFirstName() + " " + userProfile.getLastName());
 			mav.addObject("img", "https://graph.facebook.com/" + userProfile.getId() + "/picture");
+			email = userProfile.getEmail();
 		} else {
 			mav.addObject("fbuser", false);
 			final org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
@@ -66,19 +71,22 @@ public class PocController {
 			mav.addObject("email", pUser.getEmail());
 			mav.addObject("name", pUser.getFirstName() + " " + pUser.getLastName());
 			mav.addObject("password", pUser.getPassword());
+			email = pUser.getEmail();
 		}
+		com.mangopay.entities.User mangoUser = mpService.getUserByEmail(email);
 		return mav;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "execute")
-	public ModelAndView execute(@RequestParam(value = "action", required = false) final String action,
-			final Model model) {
-		System.out.println("action=" + action);
+	public void execute(@RequestParam(value = "action", required = false) final String action,
+			final HttpServletResponse response) throws IOException {
+//		System.out.println("action=" + action);
 		final ModelAndView mav = new ModelAndView("index");
-		mav.addObject("message", "peter");
-		// mpService.authMangoPay();
-		mpService.createWalletDaveyx();
-		return mav;
+		final String redirectUrl = mpService.createPayInDaveyx();
+//		mav.addObject("message", redirectUrl);
+//		
+//		return mav;
+		response.sendRedirect(redirectUrl);
 	}
 
 }
