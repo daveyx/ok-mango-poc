@@ -40,6 +40,12 @@ public class MangoController {
 		return "mango/template";
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "mango/payment")
+	public String mangoPayment() {
+		System.out.println("ok.mango.poc.controllers.MangoController.mangoTemplate()");
+		return "mango/payment";
+	}
+
 	@RequestMapping(method = RequestMethod.POST, value = "execute")
 	public void execute(@RequestParam(value = "action", required = false) final String action,
 			final HttpServletResponse response) throws IOException {
