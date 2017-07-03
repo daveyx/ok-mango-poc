@@ -42,6 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
         .csrf().disable()
+        .anonymous().and()
+        .authorizeRequests()
+        .antMatchers("/mango/template", "/mango/return").permitAll()
+        .and()
         .authorizeRequests()
         .antMatchers("/login*","/signin/**","/signup/**").permitAll()
         .anyRequest().authenticated()
