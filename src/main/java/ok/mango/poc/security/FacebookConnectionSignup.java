@@ -54,7 +54,7 @@ public class FacebookConnectionSignup implements ConnectionSignUp {
 		user.setLastName(userProfile.getLastName());
 		user.setPassword(randomAlphabetic(8));
 		userRepository.save(user);
-		return connection.getDisplayName();
+		return profileEmail;
 	}
 
 }
