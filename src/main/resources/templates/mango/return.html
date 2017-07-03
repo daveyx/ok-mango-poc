@@ -17,6 +17,14 @@
     			<h3 class="text-center">Transaction id</h3>
 	    		<div th:if="${transactionId != null}">
 				  	<div class="text-center" th:text="${transactionId}"></div>
+				  	<div class="text-center"><br />transfer to daveyx:</div>
+						<div class="text-center" style="width: 75px; margin: auto;">
+							<form action="/mango/transfertodaveyx" method="POST">
+								<input type="submit" name="action" value="transfer"
+									class="btn btn-primary" />
+								<input type="hidden" th:value="${transactionId}" name="transactionId" />
+							</form>
+						</div>
 				  </div>
 	    		<div th:if="${transactionId == null}">
 	    			<p class="text-center">transactionid is null</p>

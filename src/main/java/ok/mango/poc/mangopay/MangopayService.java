@@ -21,6 +21,7 @@ import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.PayInExecutionType;
 import com.mangopay.core.enumerations.SecureMode;
 import com.mangopay.entities.PayIn;
+import com.mangopay.entities.Transfer;
 import com.mangopay.entities.User;
 import com.mangopay.entities.UserNatural;
 import com.mangopay.entities.Wallet;
@@ -77,6 +78,18 @@ public class MangopayService implements IMangopayService {
 			e.printStackTrace();
 		}
 	}
+	
+	public PayIn getPayInInfo(final String payInId) {
+        final PayIn payIn;
+        
+        try {
+			payIn = this.api.getPayInApi().get(payInId);
+			return payIn;
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+        return null;
+	}
 
 	public User getUserByEmail(final String email) {
 		final List<User> users;
@@ -111,6 +124,36 @@ public class MangopayService implements IMangopayService {
 		System.out.println("redirectUrl" + redirectUrl);
 
 		return redirectUrl;
+	}
+	
+	public Transfer transferToDaveyx(final PayIn payIn) {
+		
+		final User debitor = getUserByUserId(payIn.getCreditedUserId());
+		if (debitor == null) {
+			throw new IllegalStateException("debitor is null");
+		}
+
+        final Transfer transfer = new Transfer();
+        transfer.setTag("DefaultTag");
+        transfer.setAuthorId(debitor.getId());
+        transfer.setCreditedUserId(debitor.getId());
+        transfer.setDebitedFunds(new Money());
+        transfer.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        transfer.getDebitedFunds().setAmount(payIn.getCreditedFunds().getAmount());
+        transfer.setFees(new Money());
+        transfer.getFees().setCurrency(CurrencyIso.EUR);
+        transfer.getFees().setAmount(20);
+
+        transfer.setDebitedWalletId(payIn.getCreditedWalletId());
+        transfer.setCreditedWalletId("28521819");	// wallet id of daveyx
+
+        try {
+			return this.api.getTransferApi().create(transfer);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+
+        return null;
 	}
 
 	public String createPayInDaveyx() {
@@ -182,9 +225,25 @@ public class MangopayService implements IMangopayService {
 		return null;
 	}
 
+
 	//
 	// ---> private
 	//
+
+
+	private User getUserByUserId(final String userId) {
+		try {
+			return api.getUserApi().get(userId);
+		} catch (final Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+//	private Wallet getWalletById(final String walletId) {
+//		
+//	}
 
 	private User createUser(final String email) {
 		final PUser pUser = userRepo.findByEmail(email);
@@ -239,7 +298,7 @@ public class MangopayService implements IMangopayService {
 		payIn.getDebitedFunds().setAmount(1000);
 		payIn.setFees(new Money());
 		payIn.getFees().setCurrency(CurrencyIso.EUR);
-		payIn.getFees().setAmount(5);
+		payIn.getFees().setAmount(0);
 		payIn.setCreditedWalletId(wallet.getId());
 		final PayInPaymentDetailsCard pipdc = new PayInPaymentDetailsCard();
 		pipdc.setCardType(CardType.CB_VISA_MASTERCARD);

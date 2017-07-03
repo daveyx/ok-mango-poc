@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mangopay.entities.PayIn;
 import com.mangopay.entities.User;
 
 import ok.mango.poc.mangopay.IMangopayService;
@@ -32,9 +33,18 @@ public class MangoController {
 	public ModelAndView mangoReturn(
 			@RequestParam(value = "transactionId", required = false) final String transactionId) {
 		System.out.println("ok.mango.poc.controllers.MangoController.mangoReturn() transactionId=" + transactionId);
+		final PayIn payIn = mpService.getPayInInfo(transactionId);
 		final ModelAndView mav = new ModelAndView("mango/return");
 		mav.addObject("transactionId", transactionId);
 		return mav;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "mango/transfertodaveyx")
+	public String transferToDaveyx(@RequestParam(value = "transactionId", required = true) final String transactionId) throws IOException {
+		System.out.println("got a transid: " + transactionId);
+		final PayIn payIn = mpService.getPayInInfo(transactionId);
+		mpService.transferToDaveyx(payIn);
+		return "mango/return";
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "mango/template")

@@ -1,5 +1,7 @@
 package ok.mango.poc.mangopay;
 
+import com.mangopay.entities.PayIn;
+import com.mangopay.entities.Transfer;
 import com.mangopay.entities.User;
 import com.mangopay.entities.Wallet;
 
@@ -11,9 +13,12 @@ import com.mangopay.entities.Wallet;
 
 public interface IMangopayService {
 	void authMangoPay();
+	User getUserByEmail(final String email);
+	String createPayIn(final String email);
+	PayIn getPayInInfo(final String payInId);
+	
 	User createUserDaveyx();
 	Wallet createWalletDaveyx();
-	User getUserByEmail(final String email);
+	Transfer transferToDaveyx(final PayIn payIn);
 	String createPayInDaveyx();
-	String createPayIn(final String email);
 }

@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable()
         .anonymous().and()
         .authorizeRequests()
-        .antMatchers("/mango/template", "/mango/return").permitAll()
+        .antMatchers("/mango/template", "/mango/return", "/mango/transfertodaveyx").permitAll()
         .and()
         .authorizeRequests()
         .antMatchers("/login*","/signin/**","/signup/**").permitAll()
