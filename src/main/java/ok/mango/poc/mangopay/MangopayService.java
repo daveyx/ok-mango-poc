@@ -11,12 +11,20 @@ import org.springframework.stereotype.Service;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.Configuration;
+import com.mangopay.core.Money;
 import com.mangopay.core.OAuthToken;
+import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CountryIso;
+import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.CurrencyIso;
+import com.mangopay.core.enumerations.PayInExecutionType;
+import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.entities.PayIn;
 import com.mangopay.entities.User;
 import com.mangopay.entities.UserNatural;
 import com.mangopay.entities.Wallet;
+import com.mangopay.entities.subentities.PayInExecutionDetailsWeb;
+import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
 
 /**
  *
@@ -77,6 +85,42 @@ public class MangopayService implements IMangopayService {
 					return user;
 				}
 			}
+		}
+		return null;
+	}
+
+	public String createPayInDaveyx() {
+		final PayIn payIn = new PayIn();
+		payIn.setAuthorId(getUserDaveyx(true).getId());
+		payIn.setCreditedUserId(getUserDaveyx(true).getId());
+		payIn.setDebitedFunds(new Money());
+		payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+		payIn.getDebitedFunds().setAmount(1000);
+		payIn.setFees(new Money());
+		payIn.getFees().setCurrency(CurrencyIso.EUR);
+		payIn.getFees().setAmount(5);
+		payIn.setCreditedWalletId("28521819");
+		final PayInPaymentDetailsCard pipdc = new PayInPaymentDetailsCard();
+		pipdc.setCardType(CardType.CB_VISA_MASTERCARD);
+		payIn.setPaymentDetails(pipdc);
+		final PayInExecutionDetailsWeb piedw = new PayInExecutionDetailsWeb();
+		piedw.setTemplateURL("https://www.ok-mango-poc.ga/mango/template");
+		piedw.setSecureMode(SecureMode.DEFAULT);
+		piedw.setCulture(CultureCode.DE);
+		piedw.setReturnURL("https://www.ok-mango-poc.ga/mango/return");
+		payIn.setExecutionDetails(piedw);
+		PayIn payInCreated;
+		try {
+			payInCreated = this.api.getPayInApi().create(payIn);
+			if (payInCreated.getExecutionType().equals(PayInExecutionType.WEB)) {
+				final PayInExecutionDetailsWeb piedwReturned = (PayInExecutionDetailsWeb) payInCreated
+						.getExecutionDetails();
+				return piedwReturned.getRedirectURL();
+			} else {
+				return null;
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
