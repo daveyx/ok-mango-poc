@@ -28,6 +28,15 @@ public class DatabaseLoader implements CommandLineRunner {
 		pUser.setLastName("Rehle");
 		pUser.setPassword(XXX);
 		this.users.save(pUser);
+
+		for (int i = 0; i < 10; i++) {
+			final PUser loopUser = new PUser();
+			loopUser.setEmail("d.rehle+" + i + "@gmail.com");
+			loopUser.setFirstName("David" + i);
+			loopUser.setLastName("Rehle" + i);
+			loopUser.setPassword(XXX);
+			this.users.save(loopUser);
+		}
 	}
 
 }
