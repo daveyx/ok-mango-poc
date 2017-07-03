@@ -59,7 +59,9 @@ public class MangoController {
 	@RequestMapping(method = RequestMethod.POST, value = "execute")
 	public void execute(@RequestParam(value = "action", required = false) final String action,
 			final HttpServletResponse response) throws IOException {
-		final String redirectUrl = mpService.createPayInDaveyx();
+		final String email = ((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal()).getUsername();
+		final String redirectUrl = mpService.createPayIn(email);
 		response.sendRedirect(redirectUrl);
 	}
 
